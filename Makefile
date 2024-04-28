@@ -28,11 +28,11 @@ $(LIBRARY): $(OBJS)
 
 clean:
 	-rm -f $(OBJS)
-re:
-	make clean
-	make all
 fclean:
 	make clean
 	-rm -f $(LIBRARY)
+re:
+	make fclean
+	make all
 
 .PHONY: clean re fclean all
