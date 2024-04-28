@@ -6,7 +6,7 @@
 /*   By: doji <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:00:30 by doji              #+#    #+#             */
-/*   Updated: 2024/04/27 19:18:07 by doji             ###   ########.fr       */
+/*   Updated: 2024/04/28 17:27:28 by doji             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-enum {
+enum e_Conversion {
 	FLAG_ERR = -1,
 	FLAG_C = 0,
 	FLAG_S = 1,
@@ -30,7 +30,7 @@ enum {
 	FLAG_XX = 7,
 	FLAG_PCNT = 8,
 	FLAG_N = 9
-} e_conversion;
+};
 
 int		_conversion_check(char c);
 int		_strlen(const char *s);
@@ -44,7 +44,8 @@ void	int_to_hex(unsigned int n, int flag, int *res);
 int		_count_conversions(const char *s);
 int		_is_conversion(const char *s);
 void	_itoa(int n, int *i);
-int		_conv_handler(char c, va_list ap, int *i);
+void	_itoa_u(unsigned int n, int *i);
+int		_conv_handler(char c, va_list ap, int i);
 int		ft_printf(const char *s, ...);
 int		address_len_int(int n);
 int		address_len(unsigned long long n);

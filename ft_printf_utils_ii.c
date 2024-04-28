@@ -6,7 +6,7 @@
 /*   By: doji <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 21:08:50 by doji              #+#    #+#             */
-/*   Updated: 2024/04/27 18:52:16 by doji             ###   ########.fr       */
+/*   Updated: 2024/04/28 17:33:37 by doji             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,23 @@ int	address_len_int(int n)
 
 int	lld_to_hex(unsigned long long n, int flag)
 {
-	static char			s[16];
-	int					i;
-	int					j;
-	char				temp;
-	unsigned long long	n2;
+	char	buf[19];
+	int		pos;
+	int		digit;
 
-	n2 = n;
-	temp = 0;
+	pos = 18;
 	if (n == 0)
 		return (_error_handler(FLAG_P, NULL));
-	i = address_len(n);
-	_putstr("0x");
-	s[i] = '\0';
-	j = 0;
-	while (--i >= 0)
+	buf[pos] = '\0';
+	while (n != 0)
 	{
-		temp = num_to_hex(((n2 >> (4 * j++)) & 0xF), flag);
-		s[i] = temp;
+		digit = n % 16;
+		buf[--pos] = num_to_hex(digit, flag);
+		n /= 16;
 	}
-	return (_putstr(s) + 2);
+	buf[--pos] = 'x';
+	buf[--pos] = '0';
+	return (_putstr(&buf[pos]));
 }
 
 void	int_to_hex(unsigned int n, int flag, int *res)
@@ -72,33 +69,4 @@ void	int_to_hex(unsigned int n, int flag, int *res)
 		}
 		*res += _putstr(s);
 	}
-}
-
-int	_count_conversions(const char *s)
-{
-	static int	conversions;
-	int			flag;
-	int			i;
-
-	flag = 0;
-	i = -1;
-	if (_strlen(s) < 2)
-		return (0);
-	while (s[++i] != '\0')
-	{
-		if (flag && (_conversion_check(s[i]) >= 0))
-		{
-			flag = 0;
-			conversions++;
-			if (s[++i] == '\0')
-				break ;
-		}
-		if (!flag && _is_percent(s[i]))
-		{
-			flag = 1;
-			if (!s[i + 1] || _conversion_check(s[i]) < 0)
-				return (-1);
-		}
-	}
-	return (conversions);
 }
